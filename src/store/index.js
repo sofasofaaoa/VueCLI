@@ -4,6 +4,7 @@ import { loginRequest } from '@/utils/api.js';
 export default createStore({
   state: {
     token: localStorage.getItem('MyAppToken') || '',
+      API: 'https://jurapro.bhuser.ru/api-shop/',
   },
    getters: {
     isAuthenticated: (state) => !!state.token,

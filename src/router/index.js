@@ -30,10 +30,33 @@ const routes = [
         path: '/login',
         name: 'login',
         component: function () {
-            return import('@/components/Login.vue');
+            return import('@/views/Login.vue');
         },
         beforeEnter: ifNotAuthenticated,
-    }
+    },
+    {path: '/catalog', name: 'catalog',
+        component: function () {
+            return import('@/views/Catalog.vue');
+        },
+    },
+    {path: '/signup', name: 'signup',
+        component: function () {
+            return import('@/views/SignUp.vue');
+        },
+        beforeEnter: ifNotAuthenticated,
+    },
+    {path: '/cart', name: 'cart',
+        component: function () {
+            return import('@/views/Cart.vue');
+        },
+        beforeEnter: ifAuthenticated,
+    },
+    {path: '/orders', name: 'orders',
+        component: function () {
+            return import('@/views/Orders.vue');
+        },
+        beforeEnter: ifAuthenticated,
+    },
 ]
 
 
