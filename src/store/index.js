@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
-import { loginRequest } from '@/utils/api.js';
+import axios from "axios";
+import router from "@/router";
 
 export default createStore({
   state: {
@@ -18,20 +19,40 @@ export default createStore({
     },
   },
   actions: {
-    AUTH_REQUEST: ({ commit }, user) => {
-      return new Promise((resolve, reject) => {
-        loginRequest(user)
-            .then((token) => {
-              commit('AUTH_SUCCESS', token);
-              resolve();
-            })
-            .catch(() => {
-              commit('AUTH_ERROR');
-              localStorage.removeItem('MyAppToken');
-              reject();
-            });
-      });
+    async SIGN_IN({commit}, user) {
+      console.log(commit)
+      try {
+        await axios.post(this.state.API + 'login', user).then((response) => {
+          this.state.token = response.data.data.token
+          localStorage.setItem('MyAppToken', this.state.token)
+          axios.defaults.headers = {Sign_in: 'Bearer' + this.state.token}
+          console.log(this.state.token)
+          router.push('/')
+        })
+      } catch (e) {
+        console.log(e)
+        commit('AUTH_ERROR');
+        localStorage.removeItem('MyAppToken');
+      }
     },
+    async SIGN_UP({commit}, user) {
+      console.log(commit)
+      try {
+        await axios.post(this.state.API + 'signup', user).then((response) => {
+          this.state.token = response.data.data.token
+          localStorage.setItem('MyAppToken', this.state.token)
+          axios.defaults.headers = {Sign_up: 'Bearer' + this.state.token}
+          router.push('/')
+        })
+      } catch (e) {
+        console.log(e)
+        commit('AUTH_ERROR');
+        localStorage.removeItem('MyAppToken');
+      }
+    },
+    async SIGN_OUT(){
+      this.state.token = ''
+    }
   },
   modules: {
   }
