@@ -7,9 +7,9 @@
     </div>
     <h1>The best shop</h1>
     <div class="style">
-      <router-link v-if="this.$store.state.token" to="logout" @click="logout"><p>Sign Out</p></router-link>
-      <router-link v-if="!this.$store.state.token" to="login"><p>Sign in</p></router-link>
-        <router-link v-if="!this.$store.state.token" to="signup"><p>Sign up</p></router-link>
+      <router-link v-if="isAuthenticated" to="logout" @click="logout"><p>Sign Out</p></router-link>
+      <router-link v-if="!isAuthenticated" to="login"><p>Sign in</p></router-link>
+        <router-link v-if="!isAuthenticated" to="signup"><p>Sign up</p></router-link>
     </div>
   </div>
 </template>
@@ -21,6 +21,9 @@ export default {
     logout(){
       this.$store.dispatch('SIGN_OUT')
     }
+  },
+  computed: {
+    isAuthenticated: function() {return this.$store.getters.isAuthenticated}
   }
 }
 </script>

@@ -18,18 +18,16 @@ const ifAuthenticated = (to, from, next) => {
 }
 
 const routes = [
-    {
-        path: '/login',
-        name: 'login',
-        component: function () {
-            return import('@/views/Login.vue');
-        },
-        beforeEnter: ifNotAuthenticated,
-    },
     {path: '/', name: 'catalog',
         component: function () {
             return import('@/views/Catalog.vue');
         },
+    },
+    {path: '/login', name: 'login',
+        component: function () {
+            return import('@/views/Login.vue');
+        },
+        beforeEnter: ifNotAuthenticated,
     },
     {path: '/signup', name: 'signup',
         component: function () {
@@ -53,6 +51,7 @@ const routes = [
         component: function () {
             return import('@/views/Logout.vue');
         },
+        beforeEnter: ifNotAuthenticated
     }
 ]
 

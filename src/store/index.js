@@ -48,7 +48,8 @@ export default createStore({
       }
     },
     async SIGN_OUT(){
-      this.state.token = '';
+      localStorage.removeItem('MyAppToken')
+      this.state.token = ''
     }
   },
   modules: {
