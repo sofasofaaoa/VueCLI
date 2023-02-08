@@ -1,6 +1,6 @@
 <template>
   <form class="signup" @submit.prevent="signup">
-    <h1>Sign up</h1>
+    <h2>Sign up</h2>
     <label>FIO</label>
     <input type="text" required v-model="fio" />
     <label>E-mail</label>
@@ -10,7 +10,6 @@
     <hr />
     <input type="submit" value="Sign Up"/>
   </form>
-  <a href="login">Sign in</a>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
   <form class="login" @submit.prevent="login">
-    <h1>Sign in</h1>
+    <h2>Sign in</h2>
     <label>E-mail</label>
     <input type="text" required v-model="email" />
     <label>Password</label>
@@ -8,7 +8,6 @@
     <hr />
     <input type="submit" value="Login"/>
   </form>
-  <a href="signup">Sign Up</a>
 </template>
 
 <script>

@@ -12,16 +12,16 @@
   color: #2c3e50;
 }
 
-nav {
+navigation {
   padding: 30px;
 }
 
-nav a {
+navigation a {
   font-weight: bold;
   color: #2c3e50;
 }
 
-nav a.router-link-exact-active {
+navigation a.router-link-exact-active {
   color: #42b983;
 }
 </style>

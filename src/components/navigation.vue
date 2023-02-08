@@ -1,11 +1,15 @@
 <template>
   <div id='header'>
-    <div class="nav">
+    <div class="style">
+      <router-link to="/">Catalog</router-link>
+      <router-link to="cart">Cart</router-link>
+      <router-link to="orders">Orders</router-link>
     </div>
-    <div class="auth">
+    <h1>The best shop</h1>
+    <div class="style">
       <router-link v-if="this.$store.state.token" to="logout" @click="logout"><p>Sign Out</p></router-link>
-      <router-link v-if="this.$store.state.token === ''" to="login"><p>Sign in</p></router-link>
-        <router-link v-if="this.$store.state.token === ''" to="register"><p>Sign up</p></router-link>
+      <router-link v-if="!this.$store.state.token" to="login"><p>Sign in</p></router-link>
+        <router-link v-if="!this.$store.state.token" to="signup"><p>Sign up</p></router-link>
     </div>
   </div>
 </template>
@@ -13,17 +17,34 @@
 <script>
 export default {
   name: "navigation",
-  logout(){
-    this.$store.dispatch('SIGN_OUT')
+  methods: {
+    logout(){
+      this.$store.dispatch('SIGN_OUT')
+    }
   }
 }
 </script>
 
 <style scoped>
-  #header {
+#header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin: 20px
+  text-align: center;
+  }
+.style {
+  position: relative;
+  align-items: center;
+  width: 300px;
+  height: 60px;
+  border-radius: 15px;
+  border: none;
+  font-size: 24px;
+  display: flex;
+}
+
+  .style > a {
+    text-decoration: none;
+    margin: 10px;
+    color: midnightblue;
   }
 </style>
