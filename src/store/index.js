@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 import axios from "axios";
 import router from "@/router";
+import cart from "@/views/Cart";
 
 export default createStore({
   state: {
@@ -11,6 +12,9 @@ export default createStore({
     isAuthenticated: (state) => !!state.token,
   },
   mutations: {
+    AUTH_SUCCESS: (state, token) => {
+      state.token = token;
+    },
     AUTH_ERROR: (state) => {
       state.token = '';
     },
@@ -20,13 +24,14 @@ export default createStore({
       console.log(commit)
       try {
         await axios.post(this.state.API + 'login', user).then((response) => {
-          this.state.token = response.data.data.token
-          localStorage.setItem('MyAppToken', this.state.token)
+          commit('AUTH_SUCCESS', response.data.data.user_token)
           axios.defaults.headers = {Authorisation: 'Bearer' + this.state.token}
-          console.log(this.state.token)
+          localStorage.setItem('MyAppToken', this.state.token)
+          console.log('success')
           router.push('/')
         })
       } catch (e) {
+        console.log('fail(')
         console.log(e)
         commit('AUTH_ERROR');
         localStorage.removeItem('MyAppToken');
@@ -36,9 +41,8 @@ export default createStore({
       console.log(commit)
       try {
         await axios.post(this.state.API + 'signup', user).then((response) => {
-          this.state.token = response.data.data.token
+          commit('AUTH_SUCCESS', response.data.data.user_token)
           localStorage.setItem('MyAppToken', this.state.token)
-          axios.defaults.headers = {Authorisation: 'Bearer' + this.state.token}
           router.push('/')
         })
       } catch (e) {
@@ -48,8 +52,18 @@ export default createStore({
       }
     },
     async SIGN_OUT(){
-      localStorage.removeItem('MyAppToken')
       this.state.token = ''
+      localStorage.removeItem('MyAppToken')
+      await axios.get(this.state.API + 'logout')
+    },
+    async ADD_TO_CART(product){
+      await axios.post(this.state.API + `cart/${product.product_id}`).then((response) => {
+        commit('ADD_CART', response.data.data.user_token)
+        axios.defaults.headers = {Authorisation: 'Bearer' + this.state.token}
+        localStorage.setItem('MyAppToken', this.state.token)
+        console.log(product.product_id)
+        router.push('/')
+      })
     }
   },
   modules: {

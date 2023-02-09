@@ -50,8 +50,7 @@ const routes = [
     {path: '/logout',  name: 'logout',
         component: function () {
             return import('@/views/Logout.vue');
-        },
-        beforeEnter: ifNotAuthenticated
+        }
     }
 ]
 

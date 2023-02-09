@@ -21,8 +21,8 @@ export default {
   methods:{
     login() {
         const userData = {
-          email: JSON.parse(JSON.stringify(this.email)),
-          password: JSON.parse(JSON.stringify(this.password)),
+          email: this.email,
+          password: this.password,
         };
 
         this.$store
