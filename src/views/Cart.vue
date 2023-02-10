@@ -1,8 +1,7 @@
 <template>
   <h2>Cart</h2>
-  {{ cartArr }}
   <div>
-    <Product v-for="prod in cartArr.data" v-bind:key="prod.id" :prod-data="prod"></Product>
+    <Product v-for="prod in cartArr" v-bind:key="prod.id" :prod-data="prod"></Product>
   </div>
 </template>
 
@@ -19,7 +18,7 @@ export default {
   },
   mounted(){
     axios.get(this.$store.state.API + 'cart').then((response)=>{
-      this.cartArr = response.data
+      this.cartArr = response.data.data
     })
   }
 }
