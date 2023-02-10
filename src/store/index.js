@@ -8,10 +8,10 @@ export default createStore({
     state: {
         token: localStorage.getItem('MyAppToken'),
         API: 'https://jurapro.bhuser.ru/api-shop/',
-        cart: ''
     },
     getters: {
         isAuthenticated: (state) => !!state.token,
+
     },
     mutations: {
         AUTH_SUCCESS: (state, token) => {
@@ -19,9 +19,6 @@ export default createStore({
         },
         AUTH_ERROR: (state) => {
             state.token = '';
-        },
-        ADD_TO_CART: (state) => {
-            state.cart = product;
         }
     },
     actions: {
@@ -63,7 +60,12 @@ export default createStore({
         async SIGN_OUT() {
             this.state.token = ''
             localStorage.removeItem('MyAppToken')
-            await axios.get(this.state.API + 'logout')
+            await axios.post(this.state.API + `logout`, {
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Authorization': 'Bearer ' + this.state.token
+                }
+            })
         },
         async ADD_TO_CART({commit}, product) {
             await axios.post(this.state.API + `cart/${product}`, product, {
@@ -72,8 +74,6 @@ export default createStore({
                     'Authorization': 'Bearer ' + this.state.token
                 }
             }).then((response) => {
-                commit('ADD_TO_CART', response.data.data.message)
-                console.log(this.state.cart)
                 router.push('/')
             })
         }

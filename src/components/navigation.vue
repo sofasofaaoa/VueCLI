@@ -2,7 +2,7 @@
   <div id='header'>
     <div class="style">
       <router-link to="/">Catalog</router-link>
-      <router-link to="cart">Cart</router-link>
+      <router-link to="cart">Cart <span></span></router-link>
       <router-link to="orders">Orders</router-link>
     </div>
     <h1>The best shop</h1>

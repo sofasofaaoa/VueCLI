@@ -8,6 +8,7 @@
 <script>
 import axios from "axios";
 import Product from "@/components/Product";
+import router from "@/router";
 export default {
   name: "Catalog",
   components: {Product},
@@ -17,7 +18,12 @@ export default {
     }
   },
   mounted(){
-    axios.get(this.$store.state.API + 'cart').then((response)=>{
+    axios.get(this.$store.state.API + `cart`, {
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        'Authorization': 'Bearer ' + this.$store.state.token
+      }
+    }).then((response) => {
       this.cartArr = response.data.data
     })
   }
@@ -25,5 +31,7 @@ export default {
 </script>
 
 <style scoped>
-
+div {
+  display: inline-block;
+}
 </style>

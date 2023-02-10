@@ -21,15 +21,7 @@ export default {
     //     cart.cart.push(response.data(this.prodData))
     //   })
     addToCart() {
-      const prodData = {
-        product_id: this.prodData.id,
-        name: this.prodData.name,
-        description: this.prodData.description,
-        price: this.prodData.price
-      };
-
-      this.$store.dispatch('ADD_TO_CART', prodData.product_id)
-
+      this.$store.dispatch('ADD_TO_CART', this.prodData.id)
   },
 }
 
